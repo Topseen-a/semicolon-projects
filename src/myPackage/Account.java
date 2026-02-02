@@ -19,20 +19,12 @@ public class Account {
         if (userPin == pin) {
             if (amount > 0 && amount <= balance) {
                 balance -= amount;
-                System.out.println("Withdrawal Successful");
             }
-            else {
-                System.out.println("Invalid amount or Insufficient balance");
-            }
-        }
-        else {
-            System.out.println("Incorrect pin");
         }
     }
 
     public int checkBalance(int userPin) {
         if (userPin != pin) {
-            System.out.println("Incorrect pin");
             return -1;
         }
         return balance;
