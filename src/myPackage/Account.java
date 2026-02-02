@@ -2,7 +2,7 @@ package myPackage;
 
 public class Account {
     private int balance;
-    private final int pin;
+    private int pin;
 
     public Account(int pin) {
         this.balance = 0;
