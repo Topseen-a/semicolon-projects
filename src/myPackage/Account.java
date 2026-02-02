@@ -5,7 +5,6 @@ public class Account {
     private int pin;
 
     public Account(int pin) {
-        this.balance = 0;
         this.pin = pin;
     }
 
