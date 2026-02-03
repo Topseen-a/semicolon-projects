@@ -1,4 +1,4 @@
-package myPackage;
+package bankApp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
