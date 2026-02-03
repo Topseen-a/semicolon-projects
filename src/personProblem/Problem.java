@@ -6,22 +6,30 @@ public class Problem {
     private ProblemType type;
     private boolean isSolved;
 
-    public Problem(String name, ProblemType type) {
+    public Problem(String name, String description, ProblemType type) {
         this.name = name;
-        this.description = "";
+        this.description = description;
         this.type = type;
         this.isSolved = false;
     }
 
-    public void solve() {
-        isSolved = true;
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ProblemType getType() {
+        return type;
+    }
+
+    public void setSolved(boolean isSolved) {
+        this.isSolved = isSolved;
     }
 
     public boolean isSolved() {
         return isSolved;
-    }
-
-    public String getDetails() {
-        return "Problem: " + name + "Type: " + type;
     }
 }
