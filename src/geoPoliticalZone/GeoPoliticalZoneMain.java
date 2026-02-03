@@ -15,7 +15,8 @@ public class GeoPoliticalZoneMain {
             System.out.print("Enter your state: ");
             String state = input.nextLine();
 
-            geoPoliticalZone.checkZone(state);
+            String checkZone = geoPoliticalZone.checkZone(state);
+            System.out.println(checkZone);
 
             System.out.print("Do you want to check another state (yes/no)? ");
             choice = input.nextLine();

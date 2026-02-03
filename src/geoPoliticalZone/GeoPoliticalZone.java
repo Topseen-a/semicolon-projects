@@ -2,28 +2,28 @@ package geoPoliticalZone;
 
 public class GeoPoliticalZone {
 
-    public void checkZone(String state) {
+    public String checkZone(String state) {
         state = state.toLowerCase();
 
         if (isNorthCentral(state)) {
-            System.out.println("Geo-Political Zone: North Central");
+            return "Geo-Political Zone: North Central";
 
         } else if (isNorthEast(state)) {
-            System.out.println("Geo-Political Zone: North East");
+            return "Geo-Political Zone: North East";
 
         } else if (isNorthWest(state)) {
-            System.out.println("Geo-Political Zone: North West");
+            return "Geo-Political Zone: North West";
 
         } else if (isSouthEast(state)) {
-            System.out.println("Geo-Political Zone: South East");
+            return "Geo-Political Zone: South East";
 
         } else if (isSouthSouth(state)) {
-            System.out.println("Geo-Political Zone: South South");
+            return "Geo-Political Zone: South South";
 
         } else if (isSouthWest(state)) {
-            System.out.println("Geo-Political Zone: South West");
+            return "Geo-Political Zone: South West";
         } else {
-            System.out.println("Invalid state entered.");
+            return "Invalid state entered.";
         }
 
     }
