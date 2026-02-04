@@ -7,22 +7,21 @@ public class GeoPoliticalZoneMain {
 
         Scanner input = new Scanner(System.in);
 
-        GeoPoliticalZone geoPoliticalZone = new GeoPoliticalZone();
+        System.out.print("Enter your state: ");
+        String state = input.nextLine();
 
-        String choice;
+        boolean isFound = false;
 
-        do {
-            System.out.print("Enter your state: ");
-            String state = input.nextLine();
+        for (GeoPoliticalZone zone : GeoPoliticalZone.values()) {
+            if (zone.containsState(state)) {
+                System.out.println("Your Geo-Political Zone is: " + zone);
+                isFound = true;
+                break;
+            }
+        }
 
-            String checkZone = geoPoliticalZone.checkZone(state);
-            System.out.println(checkZone);
-
-            System.out.print("Do you want to check another state (yes/no)? ");
-            choice = input.nextLine();
-
-        } while (choice.equalsIgnoreCase("yes"));
-
-        System.out.println("Thank you for using our App");
+        if (!isFound) {
+            System.out.println("State not found");
+        }
     }
 }

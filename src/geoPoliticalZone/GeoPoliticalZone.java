@@ -1,65 +1,38 @@
 package geoPoliticalZone;
 
-public class GeoPoliticalZone {
+public enum GeoPoliticalZone {
 
-    public String checkZone(String state) {
-        state = state.toLowerCase();
+    NORTH_CENTRAL(new String[] {
+            "Benue", "FCT", "Kogi", "Kwara", "Nasarawa", "Niger", "Plateau"
+    }),
+    NORTH_EAST(new String[] {
+            "Adamawa", "Bauchi", "Borno", "Gombe", "Taraba", "Yobe"
+    }),
+    NORTH_WEST(new String[] {
+            "Kaduna", "Katsina", "Kano", "Kebbi", "Sokoto", "Jigawa", "Zamfara"
+    }),
+    SOUTH_EAST(new String[] {
+            "Abia", "Anambra", "Ebonyi", "Enugu", "Imo"
+    }),
+    SOUTH_SOUTH(new String[] {
+            "Akwa-Ibom", "Bayelsa", "Cross-River", "Delta", "Edo", "Rivers"
+    }),
+    SOUTH_WEST(new String[] {
+            "Ekiti", "Lagos", "Osun", "Ondo", "Ogun", "Oyo"
+    });
 
-        if (isNorthCentral(state)) {
-            return "Geo-Political Zone: North Central";
+    private final String[] states;
 
-        } else if (isNorthEast(state)) {
-            return "Geo-Political Zone: North East";
+    private GeoPoliticalZone(String[] states) {
+        this.states = states;
+    }
 
-        } else if (isNorthWest(state)) {
-            return "Geo-Political Zone: North West";
-
-        } else if (isSouthEast(state)) {
-            return "Geo-Political Zone: South East";
-
-        } else if (isSouthSouth(state)) {
-            return "Geo-Political Zone: South South";
-
-        } else if (isSouthWest(state)) {
-            return "Geo-Political Zone: South West";
-        } else {
-            return "Invalid state entered.";
+    public boolean containsState(String state) {
+        for (String stateName : states) {
+            if (stateName != null && stateName.equalsIgnoreCase(state)) {
+                return true;
+            }
         }
-
-    }
-
-    public boolean isNorthCentral(String state) {
-        return state.equals("benue") || state.equals("fct") || state.equals("kogi")
-                || state.equals("kwara") || state.equals("nasarawa")
-                || state.equals("niger") || state.equals("plateau");
-    }
-
-    public boolean isNorthEast(String state) {
-        return state.equals("adamawa") || state.equals("bauchi") || state.equals("borno")
-            || state.equals("gombe") || state.equals("taraba")
-            || state.equals("yobe");
-    }
-
-    public boolean isNorthWest(String state) {
-        return state.equals("kaduna") || state.equals("katsina") || state.equals("kano")
-            || state.equals("kebbi") || state.equals("sokoto")
-            || state.equals("jigawa") || state.equals("zamfara");
-    }
-
-    public boolean isSouthEast(String state) {
-        return state.equals("abia") || state.equals("anambra") || state.equals("ebonyi")
-            || state.equals("enugu") || state.equals("imo");
-    }
-
-    public boolean isSouthSouth(String state) {
-        return state.equals("akwa-ibom") || state.equals("bayelsa") || state.equals("cross-river")
-            || state.equals("delta") || state.equals("edo")
-            || state.equals("rivers");
-    }
-
-    public boolean isSouthWest(String state) {
-        return state.equals("ekiti") || state.equals("lagos") || state.equals("osun")
-            || state.equals("ondo") || state.equals("ogun")
-            || state.equals("oyo");
+        return false;
     }
 }
