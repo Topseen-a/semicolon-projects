@@ -1,39 +1,26 @@
 package geoPoliticalZone;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GeopoliticalZoneTest {
-    GeoPoliticalZone geoZone;
 
-    @BeforeEach
-    public void setUp() {
-        geoZone = new GeoPoliticalZone();
+    @Test
+    public void testThatContainsStateIsFoundInZone() {
+        assertTrue(GeoPoliticalZone.NORTH_CENTRAL.containsState("FCT"));
+        assertTrue(GeoPoliticalZone.SOUTH_WEST.containsState("Lagos"));
     }
 
     @Test
-    public void testThatA_geoPoliticalZonReturnsTheString() {
-        String result = geoZone.checkZone("Kwara");
-        assertEquals("Geo-Political Zone: North Central", result);
+    public void testThatContainsStateIsCaseInsensitive() {
+        assertTrue(GeoPoliticalZone.SOUTH_EAST.containsState("enugu"));
+        assertTrue(GeoPoliticalZone.SOUTH_SOUTH.containsState(("Akwa-Ibom")));
     }
 
     @Test
-    public void testThatStatesAreCaseInsensitive() {
-        String result = geoZone.checkZone("LAGOS");
-        assertEquals("Geo-Political Zone: South West", result);
-    }
-
-    @Test
-    public void testThatStatesNotInGeoPoliticalZoneReturnInvalid() {
-        String result = geoZone.checkZone("Madrid");
-        assertEquals("Invalid state entered.", result);
-    }
-
-    @Test
-    public void testA_geoPoliticalZoneWithHyphen() {
-        String result = geoZone.checkZone("Akwa-Ibom");
-        assertEquals("Geo-Political Zone: South South", result);
+    public void testThatContainsStateIsUnknown() {
+        assertFalse(GeoPoliticalZone.NORTH_WEST.containsState("Osun"));
+        assertFalse(GeoPoliticalZone.NORTH_EAST.containsState("Kwara"));
     }
 }
