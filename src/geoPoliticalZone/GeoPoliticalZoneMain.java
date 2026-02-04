@@ -19,7 +19,6 @@ public class GeoPoliticalZoneMain {
                 break;
             }
         }
-
         if (!isFound) {
             System.out.println("State not found");
         }
