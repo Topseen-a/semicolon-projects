@@ -1,27 +1,46 @@
 package dsa;
 
-import java.util.Stack;
-
 public class StackTrial {
-    private Stack<String> stack;
+    private String[] stack;
+    private int capacity;
+    private int stackPosition = -1;
 
-    public StackTrial() {
-        this.stack = new Stack<>();
+    public StackTrial(int capacity) {
+        this.stack = new String[capacity];
+        this.capacity = capacity;
     }
 
     public boolean isEmpty() {
-        return stack.empty();
+        return stackPosition == -1;
     }
 
-    public void addItem(String item) {
-        stack.push(item);
+    public boolean isFull() {
+        return stackPosition == capacity - 1;
     }
 
-    public String checkItem() {
-        return stack.peek();
+    public String push(String item) {
+        if (isFull()) {
+            throw new IllegalArgumentException("Stack is full");
+        } else {
+            stack[++stackPosition] = item;
+            return item;
+        }
     }
 
-    public String removeItem(String beans) {
-        return stack.pop();
+    public void pop() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("Stack is empty, nothing to pop");
+        } else {
+            String poppedItem = stack[stackPosition];
+            stack[stackPosition--] = null;
+        }
+    }
+
+    public String peek() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("Stack is empty");
+        } else {
+             return stack[stackPosition];
+        }
     }
 }
