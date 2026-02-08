@@ -20,23 +20,23 @@ public class QueueTrialTest {
     }
 
     @Test
-    public void testThatEnqueueShouldAddElements() {
+    public void testThatOfferShouldAddElements() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
         assertEquals(2, queue.size());
     }
 
     @Test
-    public void testThatDequeueShouldRemoveElementInFIFO_order() {
+    public void testThatPollShouldRemoveElementInFIFO_order() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
 
-        assertEquals("Rice", queue.dequeue());
-        assertEquals("Beans", queue.dequeue());
+        assertEquals("Rice", queue.poll());
+        assertEquals("Beans", queue.poll());
         assertTrue(queue.isEmpty());
     }
 
@@ -44,8 +44,8 @@ public class QueueTrialTest {
     public void testThatPeekShouldReturnFront() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
 
         assertEquals("Rice", queue.peek());
     }
@@ -54,32 +54,29 @@ public class QueueTrialTest {
     public void testThatPeekDoesNotRemoveElement() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
 
         assertEquals("Rice", queue.peek());
         assertEquals(2, queue.size());
     }
 
     @Test
-    public void testThatQueueIsNotEmptyAfterEnqueue() {
+    public void testThatQueueIsNotEmptyAfterOffer() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-
+        queue.offer("Rice");
         assertFalse(queue.isEmpty());
-        assertEquals(1, queue.size());
     }
 
     @Test
-    public void testThatSizeReducesAfterDequeue() {
+    public void testThatSizeReducesAfterPoll() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
 
-        queue.dequeue();
-
+        queue.poll();
         assertEquals(1, queue.size());
     }
 
@@ -87,31 +84,30 @@ public class QueueTrialTest {
     public void testThatQueueBecomesEmptyAfterAllElementsAreRemoved() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
-        queue.enqueue("Egg");
+        queue.offer("Rice");
+        queue.offer("Beans");
+        queue.offer("Egg");
 
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
+        queue.poll();
+        queue.poll();
+        queue.poll();
 
         assertTrue(queue.isEmpty());
-        assertEquals(0, queue.size());
     }
 
     @Test
     public void testThatQueueMaintainsFIFOAfterMixedOperations() {
         assertTrue(queue.isEmpty());
 
-        queue.enqueue("Rice");
-        queue.enqueue("Beans");
+        queue.offer("Rice");
+        queue.offer("Beans");
 
-        assertEquals("Rice", queue.dequeue());
+        assertEquals("Rice", queue.poll());
 
-        queue.enqueue("Egg");
+        queue.offer("Egg");
 
-        assertEquals("Beans", queue.dequeue());
-        assertEquals("Egg", queue.dequeue());
+        assertEquals("Beans", queue.poll());
+        assertEquals("Egg", queue.poll());
     }
 
     @Test

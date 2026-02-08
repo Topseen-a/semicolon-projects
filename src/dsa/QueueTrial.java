@@ -20,7 +20,7 @@ public class QueueTrial {
         return size;
     }
 
-    public void enqueue(String item) {
+    public void offer(String item) {
         if (size == capacity) {
             throw new IllegalArgumentException("Queue is full");
         }
@@ -29,7 +29,7 @@ public class QueueTrial {
         size++;
     }
 
-    public String dequeue() {
+    public String poll() {
         if (size == 0) {
             throw new IllegalArgumentException("Queue is empty");
         }
