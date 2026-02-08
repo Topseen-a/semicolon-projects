@@ -28,6 +28,15 @@ public class StackTrialTest {
     }
 
     @Test
+    public void testThatStackIsNotEmptyAfterOnePush() {
+        assertTrue(stack.isEmpty());
+
+        stack.push("Rice");
+
+        assertFalse(stack.isEmpty());
+    }
+
+    @Test
     public void testThatPopRemovesTopItem() {
         assertTrue(stack.isEmpty());
 
@@ -35,6 +44,16 @@ public class StackTrialTest {
         stack.push("Beans");
         stack.pop();
         assertEquals("Rice", stack.peek());
+    }
+
+    @Test
+    public void testThatStackBecomesEmptyAfterPushAndPop() {
+        assertTrue(stack.isEmpty());
+
+        stack.push("Rice");
+        stack.pop();
+
+        assertTrue(stack.isEmpty());
     }
 
     @Test
@@ -53,6 +72,16 @@ public class StackTrialTest {
         stack.pop();
 
         assertTrue(stack.isEmpty());
+    }
+
+    @Test
+    public void testThatStackIsNotFullBeforeCapacity() {
+        assertTrue(stack.isEmpty());
+
+        stack.push("Rice");
+        stack.push("Beans");
+
+        assertFalse(stack.isFull());
     }
 
     @Test
@@ -76,5 +105,15 @@ public class StackTrialTest {
         stack.push("Egg");
 
         assertFalse(stack.isEmpty(), "Stack should not be empty now");
+    }
+
+    @Test
+    public void testThatTopElementAtCapacityIsCorrect() {
+        stack.push("Rice");
+        stack.push("Beans");
+        stack.push("Stew");
+        stack.push("Egg");
+
+        assertEquals("Egg", stack.peek());
     }
 }
