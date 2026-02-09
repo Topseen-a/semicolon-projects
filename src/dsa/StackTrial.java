@@ -31,7 +31,6 @@ public class StackTrial {
         if (isEmpty()) {
             throw new IllegalArgumentException("Stack is empty, nothing to pop");
         } else {
-            String poppedItem = stack[stackPosition];
             stack[stackPosition--] = null;
         }
     }
