@@ -1,6 +1,6 @@
 package estore;
 
-public class User {
+public abstract class User {
     private String name;
     private int age;
     private String email;
