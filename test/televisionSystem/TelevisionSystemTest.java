@@ -75,7 +75,7 @@ public class TelevisionSystemTest {
     }
 
     @Test
-    public void testThatVolumeDoesNotExceedMinimum() {
+    public void testThatVolumeDoesNotGoBelowMinimum() {
         assertFalse(tv.isOn());
 
         tv.powerOn();
