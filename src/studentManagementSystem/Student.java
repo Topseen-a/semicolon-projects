@@ -10,7 +10,7 @@ public class Student {
     private List<Course> courses;
 
     public Student(String name, String id) {
-        invalidInput(name, id);
+        isValidInput(name, id);
         this.name = name;
         this.id = id;
         this.courses = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Student {
         throw new IllegalArgumentException("Course not found");
     }
 
-    private void invalidInput(String name, String id) {
+    private void isValidInput(String name, String id) {
         if (name == null || id == null) {
             throw new IllegalArgumentException(("Invalid input"));
         }
