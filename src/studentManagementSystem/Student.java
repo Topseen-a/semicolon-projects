@@ -10,7 +10,7 @@ public class Student {
     private List<Course> courses;
 
     public Student(String name, String id) {
-        if (id == null || name == null) {
+        if (name == null || id == null) {
             throw new IllegalArgumentException(("Invalid input"));
         }
         this.name = name;
