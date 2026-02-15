@@ -3,15 +3,18 @@ package bankApp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
     Account account;
+    Account secondAccount;
     private int pin = 1234;
+    private int secondPin = 5678;
 
     @BeforeEach
     public void setUp() {
-        account = new Account(pin);
+        account = new Account("8149587217", pin);
+        secondAccount = new Account("8033297106", secondPin);
     }
 
     @Test
@@ -87,5 +90,41 @@ public class AccountTest {
         account.deposit(5_000);
         account.withdraw(5_000, pin);
         assertEquals(0, account.checkBalance(pin));
+    }
+
+    @Test
+    public void testThatTransferSucceedsWhenBalanceIsSufficient() {
+        assertEquals(0, account.checkBalance(pin));
+        account.deposit(5_000);
+
+        boolean result = account.transfer(secondAccount, 2_000, pin);
+
+        assertTrue(result);
+        assertEquals(3_000, account.checkBalance(pin));
+        assertEquals(2_000, secondAccount.checkBalance(secondPin));
+    }
+
+    @Test
+    public void testThatTransferFailsWithWrongPin() {
+        assertEquals(0, account.checkBalance(pin));
+        account.deposit(5_000);
+
+        boolean result = account.transfer(secondAccount, 2_000, 9999);
+
+        assertFalse(result);
+        assertEquals(5_000, account.checkBalance(pin));
+        assertEquals(0, secondAccount.checkBalance(secondPin));
+    }
+
+    @Test
+    public void testThatTransferFailsWhenInsufficientFunds() {
+        assertEquals(0, account.checkBalance(pin));
+        account.deposit(1_000);
+
+        boolean result = account.transfer(secondAccount, 5_000, pin);
+
+        assertFalse(result);
+        assertEquals(1_000, account.checkBalance(pin));
+        assertEquals(0, secondAccount.checkBalance(secondPin));
     }
 }

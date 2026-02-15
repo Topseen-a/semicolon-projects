@@ -1,11 +1,18 @@
 package bankApp;
 
 public class Account {
+    private String number;
     private int balance;
     private int pin;
 
-    public Account(int pin) {
+    public Account(String number, int pin) {
+        this.number = number;
+        this.balance = 0;
         this.pin = pin;
+    }
+
+    public String getAccountNumber() {
+        return number;
     }
 
     public void deposit(int amount) {
@@ -27,5 +34,19 @@ public class Account {
             return -1;
         }
         return balance;
+    }
+
+    public boolean transfer(Account targetAccount, int amount, int userPin) {
+        if (userPin != pin) {
+            return false;
+        }
+
+        if (amount > 0 && amount <= balance) {
+            this.balance -= amount;
+            targetAccount.deposit(amount);
+            return true;
+        }
+
+        return false;
     }
 }
