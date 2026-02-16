@@ -126,4 +126,10 @@ public class AccountTest {
         assertEquals(1_000, account.checkBalance(pin));
         assertEquals(0, secondAccount.checkBalance(secondPin));
     }
+
+    @Test
+    public void testGetAccountNumber() {
+        assertEquals("8149587217", account.getAccountNumber());
+        assertEquals("8033297106", secondAccount.getAccountNumber());
+    }
 }

@@ -26,10 +26,6 @@ public class Account {
         return name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void deposit(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit must be positive");
