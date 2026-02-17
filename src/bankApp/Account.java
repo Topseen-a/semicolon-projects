@@ -18,12 +18,9 @@ public class Account {
         this.pin = pin;
     }
 
-    public String getAccountNumber() {
-        return number;
-    }
-
-    public String getName() {
-        return name;
+    public int checkBalance(int userPin) {
+        validatePin(userPin);
+        return balance;
     }
 
     public void deposit(int amount) {
@@ -44,11 +41,6 @@ public class Account {
         balance -= amount;
     }
 
-    public int checkBalance(int userPin) {
-        validatePin(userPin);
-        return balance;
-    }
-
     public void transfer(Account receiverAccount, int amount, int userPin) {
         validatePin(userPin);
         if (receiverAccount == null) {
@@ -63,6 +55,14 @@ public class Account {
 
         this.balance -= amount;
         receiverAccount.deposit(amount);
+    }
+
+    public String getAccountNumber() {
+        return number;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void validateName(String name) {
