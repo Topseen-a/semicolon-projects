@@ -4,58 +4,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankApp {
-
+    private String name;
     private List<Account> accounts;
 
-    public BankApp() {
-
-        accounts = new ArrayList<>();
+    public BankApp(String name) {
+        this.name = name;
+        this.accounts = new ArrayList<>();
     }
 
-    public void addAccount(Account account) {
-        if (account == null) {
-            throw new IllegalArgumentException("Account cannot be null");
+    public Account createAccount(String name, String phoneNumber, String pin) {
+        String accountNumber = generateAccountNumber(phoneNumber);
+        if (findAccountIfExists(accountNumber) != null) {
+            throw new IllegalArgumentException("Account already exists");
         }
-
-        for (Account accountList : accounts) {
-            if (accountList.getAccountNumber().equals(account.getAccountNumber())) {
-                throw new IllegalArgumentException("Account already exists");
-            }
-        }
+        Account account = new Account(name, accountNumber, phoneNumber, pin);
         accounts.add(account);
+        return account;
     }
 
-    public void deposit(String accountNumber, int amount) {
+    public void deposit(String accountNumber, double amount) {
         Account account = findAccount(accountNumber);
         account.deposit(amount);
     }
 
-    public void withdraw(String accountNumber, int amount, int pin) {
+    public void withdraw(String accountNumber, double amount, String pin) {
         Account account = findAccount(accountNumber);
         account.withdraw(amount, pin);
     }
 
-    public void transfer(String senderAccountNumber, String receiverAccountNumber, int amount, int pin) {
+    public void transfer(String senderAccountNumber, String receiverAccountNumber, double amount, String pin) {
         Account sender = findAccount(senderAccountNumber);
         Account receiver = findAccount(receiverAccountNumber);
-        sender.transfer(receiver, amount, pin);
+        sender.withdraw(amount, pin);
+        receiver.deposit(amount);
     }
 
-    public int checkBalance(String accountNumber, int pin) {
+    public double checkBalance(String accountNumber, String pin) {
         Account account = findAccount(accountNumber);
         return account.checkBalance(pin);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Account> getAllAccounts() {
         return accounts;
     }
 
-    private Account findAccount(String accountNumber) {
-        for (Account accountList : accounts) {
-            if (accountList.getAccountNumber().equals(accountNumber)) {
-                return accountList;
+    private Account findAccountIfExists(String accountNumber) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
             }
         }
-        throw new IllegalArgumentException("No account found with number");
+        return null;
+    }
+
+    private String generateAccountNumber(String phoneNumber) {
+        if (phoneNumber == null || !phoneNumber.matches("\\d{11}"))
+            throw new IllegalArgumentException("Phone number must be 11 digits");
+
+        return phoneNumber.substring(1);
+    }
+
+    private Account findAccount(String accountNumber) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
     }
 }

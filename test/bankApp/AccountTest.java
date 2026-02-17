@@ -6,15 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
-    Account account;
-    Account secondAccount;
-    private int pin = 1234;
-    private int secondPin = 5678;
+    private Account account;
+    private String pin = "1234";
 
     @BeforeEach
     public void setUp() {
-        account = new Account("Tayo","08149587217", pin);
-        secondAccount = new Account("Bola","08033297106", secondPin);
+        account = new Account("Tayo","8149587217", "08149587217", pin);
     }
 
     @Test
@@ -94,42 +91,25 @@ public class AccountTest {
     public void testThatCheckBalanceWithWrongPinThrowsException() {
         assertEquals(0, account.checkBalance(pin));
         account.deposit(5_000);
-        assertThrows(IllegalArgumentException.class, () -> account.checkBalance(8122));
+        assertThrows(IllegalArgumentException.class, () -> account.checkBalance("8122"));
     }
 
     @Test
-    public void testThatTransferReducesSenderBalanceAndIncreasesReceiverBalance() {
+    public void testThatChangePinWorksSuccessfully() {
         assertEquals(0, account.checkBalance(pin));
-        account.deposit(5_000);
-        account.transfer(secondAccount, 2_000, pin);
-
-        assertEquals(3_000, account.checkBalance(pin));
-        assertEquals(2_000, secondAccount.checkBalance(secondPin));
+        account.changePin("1234", "4321");
+        account.deposit(1000);
+        assertEquals(1000, account.checkBalance("4321"));
     }
 
     @Test
-    public void testThatTransferWithWrongPinThrowsException() {
-        assertEquals(0, account.checkBalance(pin));
-        account.deposit(5_000);
-        assertThrows(IllegalArgumentException.class, () -> account.transfer(secondAccount, 2_000, 8122));
-
-        assertEquals(5_000, account.checkBalance(pin));
-        assertEquals(0, secondAccount.checkBalance(secondPin));
+    public void testThatChangePinWithWrongOldPinThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> account.changePin("1223", "4321"));
     }
 
     @Test
-    public void testThatTransferMoreThanBalanceThrowsException() {
-        assertEquals(0, account.checkBalance(pin));
-        account.deposit(1_000);
-        assertThrows(IllegalArgumentException.class, () -> account.transfer(secondAccount, 5_000, pin));
-
-        assertEquals(1_000, account.checkBalance(pin));
-        assertEquals(0, secondAccount.checkBalance(secondPin));
-    }
-
-    @Test
-    public void testGetAccountNumber() {
+    public void testThatGetAccountNumberIs10Digits() {
         assertEquals("8149587217", account.getAccountNumber());
-        assertEquals("8033297106", secondAccount.getAccountNumber());
+        assertEquals(10, account.getAccountNumber().length());
     }
 }

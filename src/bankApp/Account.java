@@ -2,36 +2,38 @@ package bankApp;
 
 public class Account {
     private String name;
-    private String number;
+    private String accountNumber;
     private String phoneNumber;
-    private int balance;
-    private int pin;
+    private double balance;
+    private String pin;
 
-    public Account(String name, String phoneNumber, int pin) {
+    public Account(String name, String accountNumber, String phoneNumber, String pin) {
         validateName(name);
+        validateAccountNumber(accountNumber);
         validatePhoneNumber(phoneNumber);
-        validatePinCount(pin);
+        validatePin(pin);
+
         this.name = name;
-        this.number = phoneNumber.substring(1);
+        this.accountNumber = accountNumber;
         this.phoneNumber = phoneNumber;
         this.balance = 0;
         this.pin = pin;
     }
 
-    public int checkBalance(int userPin) {
-        validatePin(userPin);
+    public double checkBalance(String userPin) {
+        validateUserPin(userPin);
         return balance;
     }
 
-    public void deposit(int amount) {
+    public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit must be positive");
         }
         balance += amount;
     }
 
-    public void withdraw(int amount, int userPin) {
-        validatePin(userPin);
+    public void withdraw(double amount, String userPin) {
+        validateUserPin(userPin);
         if (amount <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be positive");
         }
@@ -41,24 +43,14 @@ public class Account {
         balance -= amount;
     }
 
-    public void transfer(Account receiverAccount, int amount, int userPin) {
-        validatePin(userPin);
-        if (receiverAccount == null) {
-            throw new IllegalArgumentException("Receiver account cannot be null");
-        }
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Transfer amount must be positive");
-        }
-        if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient balance");
-        }
-
-        this.balance -= amount;
-        receiverAccount.deposit(amount);
+    public void changePin(String oldPin, String newPin) {
+        validateUserPin(oldPin);
+        validatePin(newPin);
+        this.pin = newPin;
     }
 
     public String getAccountNumber() {
-        return number;
+        return accountNumber;
     }
 
     public String getName() {
@@ -66,25 +58,30 @@ public class Account {
     }
 
     private void validateName(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be empty");
         }
     }
 
+    private void validateAccountNumber(String accountNumber) {
+        if (accountNumber == null || !accountNumber.matches("\\d{10}"))
+            throw new IllegalArgumentException("Account number must be 10 digits");
+    }
+
     private void validatePhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.length() < 11) {
+        if (phoneNumber.length() != 11) {
             throw new IllegalArgumentException("Invalid phone number");
         }
     }
 
-    private void validatePinCount(int pin) {
-        if (pin < 1000 || pin > 9999) {
+    private void validatePin(String pin) {
+        if (pin == null || pin.length() != 4) {
             throw new IllegalArgumentException(("PIN must be a four digit pin"));
         }
     }
 
-    private void validatePin(int userPin) {
-        if (userPin != pin) {
+    private void validateUserPin(String userPin) {
+        if (!pin.equals(userPin)) {
             throw new IllegalArgumentException("Invalid PIN");
         }
     }

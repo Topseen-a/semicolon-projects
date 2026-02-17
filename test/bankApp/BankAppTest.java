@@ -3,23 +3,24 @@ package bankApp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAppTest {
-    BankApp bank;
-    Account account;
-    Account secondAccount;
+    private BankApp bank;
+    private Account account;
+    private Account secondAccount;
 
-    private int pin = 1234;
-    private int secondPin = 5678;
+    private String pin = "1234";
+    private String secondPin = "5678";
 
     @BeforeEach
     public void setUp() {
-        bank = new BankApp();
+        bank = new BankApp("Semicolon Bank");
+    }
 
-        account = new Account("Tayo", "08149587217", pin);
-        secondAccount = new Account("Bola", "08033297106", secondPin);
+    @Test
+    public void testThatBankHasName() {
+        assertEquals("Semicolon Bank", bank.getName());
     }
 
     @Test
@@ -28,35 +29,35 @@ public class BankAppTest {
     }
 
     @Test
-    public void testThatAccountCanBeAddedToBank() {
+    public void testThatAccountIsCreated() {
         assertEquals(0, bank.getAllAccounts().size());
-        bank.addAccount(account);
-        bank.addAccount(secondAccount);
-        assertEquals(2, bank.getAllAccounts().size());
+        account = bank.createAccount("Tayo", "08149587217", pin);
+        assertEquals(1, bank.getAllAccounts().size());
     }
 
     @Test
-    public void testThatDepositWorksThroughBankApp() {
+    public void testThatDepositThroughBankWorks() {
         assertEquals(0, bank.getAllAccounts().size());
-        bank.addAccount(account);
+        account = bank.createAccount("Tayo", "08149587217", pin);
         bank.deposit(account.getAccountNumber(), 5000);
         assertEquals(5000, bank.checkBalance(account.getAccountNumber(), pin));
     }
 
     @Test
-    public void testThatWithdrawWorksThroughBankApp() {
+    public void testThatWithdrawThroughBankWorks() {
         assertEquals(0, bank.getAllAccounts().size());
-        bank.addAccount(account);
+        account = bank.createAccount("Tayo", "08149587217", pin);
         bank.deposit(account.getAccountNumber(), 5000);
         bank.withdraw(account.getAccountNumber(), 2000, pin);
+
         assertEquals(3000, bank.checkBalance(account.getAccountNumber(), pin));
     }
 
     @Test
-    public void testThatTransferWorksThroughBankApp() {
+    public void testThatTransferThroughBankWorks() {
         assertEquals(0, bank.getAllAccounts().size());
-        bank.addAccount(account);
-        bank.addAccount(secondAccount);
+        account = bank.createAccount("Tayo", "08149587217", pin);
+        secondAccount = bank.createAccount("Bola", "08033297106", secondPin);
         bank.deposit(account.getAccountNumber(), 5000);
 
         bank.transfer(account.getAccountNumber(), secondAccount.getAccountNumber(), 2000, pin);
@@ -66,8 +67,24 @@ public class BankAppTest {
     }
 
     @Test
+    public void testThatTransferWithWrongPinThrowsException() {
+        assertEquals(0, bank.getAllAccounts().size());
+        account = bank.createAccount("Tayo", "08149587217", pin);
+        secondAccount = bank.createAccount("Bola", "08033297106", secondPin);
+        bank.deposit(account.getAccountNumber(), 5000);
+
+        assertThrows(IllegalArgumentException.class, () -> bank.transfer(account.getAccountNumber(), secondAccount.getAccountNumber(), 2000, "1223"));
+    }
+
+    @Test
     public void testThatFindingNonExistingAccountThrowsException() {
         assertEquals(0, bank.getAllAccounts().size());
-        assertThrows(IllegalArgumentException.class, () -> bank.deposit("0000000000", 1000));
+        assertThrows(IllegalArgumentException.class, () -> bank.deposit("1234567", 1000));
+    }
+
+    @Test
+    public void testThatInvalidPhoneNumberThrowsException() {
+        assertEquals(0, bank.getAllAccounts().size());
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("Bola", "12345", "1234"));
     }
 }
