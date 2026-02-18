@@ -1,6 +1,6 @@
-package tiktaktoe;
+package tictactoe;
 
-public class TikTakToe {
+public class TicTacToe {
     public static void main(String[] args) {
 
         int[][] game = new int[3][3];
