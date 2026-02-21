@@ -11,7 +11,7 @@ public class AccountTest {
 
     @BeforeEach
     public void setUp() {
-        account = new Account("Tayo","8149587217", "08149587217", pin);
+        account = new Account("Tayo","08149587217", pin);
     }
 
     @Test
@@ -108,8 +108,23 @@ public class AccountTest {
     }
 
     @Test
-    public void testThatGetAccountNumberIs10Digits() {
+    public void testThatSetAccountNumberWithValid10_DigitsSetsSuccessfully() {
+        account.setAccountNumber("8149587217");
         assertEquals("8149587217", account.getAccountNumber());
-        assertEquals(10, account.getAccountNumber().length());
+    }
+
+    @Test
+    public void testThatSetAccountNumberWithLessThan10_DigitsThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {account.setAccountNumber("81495872");});
+    }
+
+    @Test
+    public void testThatSetAccountNumberWithMoreThan10_DigitsThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {account.setAccountNumber("08149587217");});
+    }
+
+    @Test
+    public void testThatSetAccountNumberWithLettersThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {account.setAccountNumber("81495abcde");});
     }
 }

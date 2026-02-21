@@ -17,7 +17,8 @@ public class BankApp {
         if (findAccountIfExists(accountNumber) != null) {
             throw new IllegalArgumentException("Account already exists");
         }
-        Account account = new Account(name, accountNumber, phoneNumber, pin);
+        Account account = new Account(name, phoneNumber, pin);
+        account.setAccountNumber(accountNumber);
         accounts.add(account);
         return account;
     }

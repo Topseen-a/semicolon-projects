@@ -24,6 +24,18 @@ public class BankAppTest {
     }
 
     @Test
+    public void testThatGetPhoneNumberReturnsCorrectPhoneNumber() {
+        Account account = bank.createAccount("Tayo", "08149587217", "1234");
+        assertEquals("08149587217", account.getPhoneNumber());
+    }
+
+    @Test
+    public void testThatGetAccountNumberIs10Digits() {
+        Account account = bank.createAccount("Tayo", "08149587217", "1234");
+        assertEquals(10, account.getAccountNumber().length());
+    }
+
+    @Test
     public void testThatAccountListInBankIsEmpty() {
         assertEquals(0, bank.getAllAccounts().size());
     }

@@ -12,7 +12,7 @@ public class AtmMachine {
 
     public static void displayMainMenu() {
         String mainMenu = """
-                Welcome to X bank!!!
+                Welcome to Semicolon bank!!!
                 1 -> Create Account
                 2 -> Deposit
                 3 -> Withdraw

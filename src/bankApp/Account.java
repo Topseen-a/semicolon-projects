@@ -7,17 +7,20 @@ public class Account {
     private double balance;
     private String pin;
 
-    public Account(String name, String accountNumber, String phoneNumber, String pin) {
+    public Account(String name, String phoneNumber, String pin) {
         validateName(name);
-        validateAccountNumber(accountNumber);
         validatePhoneNumber(phoneNumber);
         validatePin(pin);
 
         this.name = name;
-        this.accountNumber = accountNumber;
         this.phoneNumber = phoneNumber;
         this.balance = 0;
         this.pin = pin;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        validateAccountNumber(accountNumber);
+        this.accountNumber = accountNumber;
     }
 
     public double checkBalance(String userPin) {
@@ -55,6 +58,10 @@ public class Account {
 
     public String getName() {
         return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     private void validateName(String name) {
