@@ -4,18 +4,19 @@ public class Account {
     private String name;
     private String accountNumber;
     private String phoneNumber;
-    private double balance;
     private String pin;
+    private double balance;
+
 
     public Account(String name, String phoneNumber, String pin) {
         validateName(name);
-        validatePhoneNumber(phoneNumber);
-        validatePin(pin);
-
         this.name = name;
+        validatePhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
-        this.balance = 0;
+        validatePin(pin);
         this.pin = pin;
+        this.balance = 0;
+
     }
 
     public void setAccountNumber(String accountNumber) {
