@@ -6,7 +6,7 @@ public class AtmMachine {
     private static BankApp bankApp;
 
     static void main() {
-        bankApp = new BankApp("X bank");
+        bankApp = new BankApp("Semicolon bank");
         displayMainMenu();
     }
 

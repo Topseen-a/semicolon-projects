@@ -7,7 +7,6 @@ public class Account {
     private String pin;
     private double balance;
 
-
     public Account(String name, String phoneNumber, String pin) {
         validateName(name);
         this.name = name;
