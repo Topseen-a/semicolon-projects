@@ -7,112 +7,72 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentManagementTest {
 
-    Student student;
+    private StudentManagementSystem system;
 
     @BeforeEach
     public void setUp() {
-        student = new Student("Tayo", "1234");
+        system = new StudentManagementSystem();
     }
 
     @Test
-    public void testThatStudentStartsWithNoCourses() {
-        assertEquals(0, student.getCourses().size());
+    public void testThatStudentManagementCanRegisterStudent() {
+        int studentId = system.registerStudent("Tayo");
+        assertEquals(1, studentId);
     }
 
     @Test
-    public void testThatStudentCanEnrollForA_course() {
-        assertEquals(0, student.getCourses().size());
-
-        Course course = new Course("CSC101");
-        student.enroll(course);
-        assertEquals(1, student.getCourses().size());
+    public void testThatRegisterInvalidStudentRaisesError() {
+        assertThrows(IllegalArgumentException.class, () -> {system.registerStudent("");});
     }
 
     @Test
-    public void testThatStudentCanEnrollForMultipleCourses() {
-        assertEquals(0, student.getCourses().size());
-
-        Course courseOne = new Course("CSC101");
-        student.enroll(courseOne);
-        Course courseTwo = new Course("CSC112");
-        student.enroll(courseTwo);
-        Course courseThree = new Course("CSC121");
-        student.enroll(courseThree);
-        assertEquals(3, student.getCourses().size());
+    public void testThatGetNonexistentStudentRaisesError() {
+        assertThrows(IllegalArgumentException.class, () -> {system.getStudent(999);});
     }
 
     @Test
-    public void testThatGradesCanBeAssignedToStudent() {
-        assertEquals(0, student.getCourses().size());
-
-        Course course = new Course("CSC101");
-        student.enroll(course);
-        student.assignGrade("CSC101", 70);
-
-        assertEquals(70, course.getGrade());
+    public void testStudentManagementCanAddCourse() {
+        system.addCourse("CS101", "Intro");
+        Course course = system.getCourse("CS101");
+        assertEquals("Intro", course.getTitle());
     }
 
     @Test
-    public void testThatGradeIsAssignedToCorrectCourseOnly() {
-        assertEquals(0, student.getCourses().size());
+    public void testThatDuplicateCourseRaisesException() {
+        system.addCourse("CS101", "Intro");
 
-        Course courseOne = new Course("CSC101");
-        Course courseTwo = new Course("CSC112");
-
-        student.enroll(courseOne);
-        student.enroll(courseTwo);
-
-        student.assignGrade("CSC112", 85);
-
-        assertNull(courseOne.getGrade());
-        assertEquals(85, courseTwo.getGrade());
+        assertThrows(IllegalArgumentException.class, () -> {system.addCourse("CS101", "Intro");});
     }
 
     @Test
-    public void testThatGradeCanBeUpdated() {
-        assertEquals(0, student.getCourses().size());
+    public void testFullWorkflow() {
+        int studentId = system.registerStudent("Tayo");
+        system.addCourse("CS101", "Intro");
 
-        Course course = new Course("CSC101");
-        student.enroll(course);
+        system.enrollStudent(studentId, "CS101");
+        system.assignGrade(studentId, "CS101", 88);
 
-        student.assignGrade("CSC101", 60);
-        student.assignGrade("CSC101", 80);
+        Student student = system.getStudent(studentId);
+        Enrollment enrollment = student.getEnrollments().get(0);
 
-        assertEquals(80, course.getGrade());
+        assertEquals(88, enrollment.getGrade());
     }
 
     @Test
-    public void testThatMinimumGradeIsAccepted() {
-        assertEquals(0, student.getCourses().size());
+    public void testThatDuplicateEnrollmentRaisesException() {
+        int studentId = system.registerStudent("Tayo");
+        system.addCourse("CS101", "Intro");
 
-        Course course = new Course("CSC101");
-        student.enroll(course);
+        system.enrollStudent(studentId, "CS101");
 
-        student.assignGrade("CSC101", 0);
-
-        assertEquals(0, course.getGrade());
+        assertThrows(IllegalArgumentException.class, () -> {system.enrollStudent(studentId, "CS101");});
     }
 
     @Test
-    public void testThatMaximumGradeIsAccepted() {
-        assertEquals(0, student.getCourses().size());
+    public void testAssignGradeWhenStudentIsNotEnrolled() {
+        int studentId = system.registerStudent("Tayo");
+        system.addCourse("CS101", "Intro");
 
-        Course course = new Course("CSC101");
-        student.enroll(course);
-
-        student.assignGrade("CSC101", 100);
-
-        assertEquals(100, course.getGrade());
-    }
-
-    @Test
-    public void testThatStudentsHaveIndependentCourseLists() {
-        assertEquals(0, student.getCourses().size());
-
-        Student studentTwo = new Student("Bola", "5678");
-        studentTwo.enroll(new Course("CSC101"));
-
-        assertEquals(0, student.getCourses().size());
-        assertEquals(1, studentTwo.getCourses().size());
+        assertThrows(IllegalArgumentException.class, () -> {system.assignGrade(studentId, "CS101", 90);});
     }
 }

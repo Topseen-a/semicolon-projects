@@ -3,28 +3,25 @@ package studentManagementSystem;
 public class Course {
 
     private String code;
-    private Double grade;
+    private String title;
 
-    public Course(String code) {
+    public Course(String code, String title) {
+        validateData(code, title);
         this.code = code;
-    }
-
-    public void setGrade(Double grade) {
-        isValidGrade(grade);
-        this.grade = grade;
-    }
-
-    public Double getGrade() {
-        return grade;
+        this.title = title;
     }
 
     public String getCode() {
         return code;
     }
 
-    private void isValidGrade(Double grade) {
-        if (grade < 0 || grade > 100) {
-            throw new IllegalArgumentException("Invalid grade entered");
+    public String getTitle() {
+        return title;
+    }
+
+    private void validateData(String code, String title) {
+        if (code == null || code.isBlank() || title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Invalid course data");
         }
     }
 }

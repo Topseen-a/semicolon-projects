@@ -6,37 +6,40 @@ import java.util.List;
 public class Student {
 
     private String name;
-    private String id;
-    private List<Course> courses;
+    private int id;
+    private List<Enrollment> enrollments;
 
-    public Student(String name, String id) {
-        isValidInput(name, id);
+    public Student(String name, int id) {
+        validateName(name);
         this.name = name;
         this.id = id;
-        this.courses = new ArrayList<>();
+        this.enrollments = new ArrayList<>();
     }
 
-    public void enroll(Course course) {
-        courses.add(course);
+    public int getId() {
+        return id;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public String getName() {
+        return name;
     }
 
-    public void assignGrade(String courseCode, double grade) {
-        for (Course course : courses) {
-            if (course.getCode().equals(courseCode)) {
-                course.setGrade(grade);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("Course not found");
+    public void updateName(String newName) {
+        validateName(newName);
+        this.name = newName;
     }
 
-    private void isValidInput(String name, String id) {
-        if (name == null || id == null) {
-            throw new IllegalArgumentException(("Invalid input"));
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return new ArrayList<>(enrollments);
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Invalid name");
         }
     }
 }
