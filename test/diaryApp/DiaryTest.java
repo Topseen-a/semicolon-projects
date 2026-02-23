@@ -54,38 +54,38 @@ public class DiaryTest {
     public void testThatEntryIsCreatedSuccessfully() {
         assertTrue(diary.isLocked());
         diary.unlockDiary("ab1234");
-        diary.createEntry("Title", "Body");
+        diary.createEntry("Hope", "Live life");
 
         Entry entry = diary.findEntryById(1);
         assertNotNull(entry);
-        assertEquals("Title", entry.getTitle());
-        assertEquals("Body", entry.getBody());
+        assertEquals("Hope", entry.getTitle());
+        assertEquals("Live life", entry.getBody());
     }
 
     @Test
     public void testThatEntryCannotBeCreatedWhenLocked() {
         assertTrue(diary.isLocked());
-        assertThrows(IllegalArgumentException.class, () -> diary.createEntry("Title", "Body"));
+        assertThrows(IllegalArgumentException.class, () -> diary.createEntry("Hope", "Live life"));
     }
 
     @Test
     public void testThatEntryIsUpdatedSuccessfully() {
         assertTrue(diary.isLocked());
         diary.unlockDiary("ab1234");
-        diary.createEntry("Old Title", "Old Body");
+        diary.createEntry("Hope", "Live life");
 
-        diary.updateEntry(1, "New Title", "New Body");
+        diary.updateEntry(1, "New Hope", "New Life");
 
         Entry entry = diary.findEntryById(1);
-        assertEquals("New Title", entry.getTitle());
-        assertEquals("New Body", entry.getBody());
+        assertEquals("New Hope", entry.getTitle());
+        assertEquals("New Life", entry.getBody());
     }
 
     @Test
     public void testThatEntryIsDeletedSuccessfully() {
         assertTrue(diary.isLocked());
         diary.unlockDiary("ab1234");
-        diary.createEntry("Title", "Body");
+        diary.createEntry("Hope", "Live life");
 
         diary.deleteEntry(1);
 
@@ -99,7 +99,7 @@ public class DiaryTest {
         diary.unlockDiary("ab1234");
 
         LocalDateTime beforeCreation = LocalDateTime.now();
-        diary.createEntry("Title", "Body");
+        diary.createEntry("Hope", "Live life");
 
         LocalDateTime afterCreation = LocalDateTime.now();
         Entry entry = diary.findEntryById(1);
