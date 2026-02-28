@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TurtleGraphicsTest {
 
     Turtle ijapa;
+    SketchPad sketchPad;
 
     @BeforeEach
     public void setUp() {
         ijapa = new Turtle();
+        sketchPad = new SketchPad(20);
     }
 
     @Test
@@ -108,5 +110,72 @@ public class TurtleGraphicsTest {
         assertEquals(Direction.SOUTH, ijapa.getCurrentDirection());
         ijapa.turnLeft();
         assertEquals(Direction.EAST, ijapa.getCurrentDirection());
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardFacingEastWithPenDown() {
+        assertTrue(ijapa.penIsUp());
+        ijapa.movePenDown();
+        ijapa.moveForward(5, sketchPad);
+        assertEquals(0, ijapa.getCurrentPosition().getRow());
+        assertEquals(5, ijapa.getCurrentPosition().getColumn());
+
+        assertEquals(1, sketchPad.getFloor()[0][1]);
+        assertEquals(1, sketchPad.getFloor()[0][5]);
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardFacingSouthWithPenDown() {
+        assertTrue(ijapa.penIsUp());
+        ijapa.movePenDown();
+        ijapa.moveForward(5, sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5, sketchPad);
+        assertEquals(5, ijapa.getCurrentPosition().getRow());
+        assertEquals(5, ijapa.getCurrentPosition().getColumn());
+
+        assertEquals(1, sketchPad.getFloor()[0][1]);
+        assertEquals(1, sketchPad.getFloor()[0][5]);
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardFacingWestWithPenDown() {
+        assertTrue(ijapa.penIsUp());
+        ijapa.movePenDown();
+        ijapa.moveForward(5, sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5,  sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5,  sketchPad);
+        assertEquals(5, ijapa.getCurrentPosition().getRow());
+        assertEquals(0, ijapa.getCurrentPosition().getColumn());
+
+        assertEquals(1, sketchPad.getFloor()[0][1]);
+        assertEquals(1, sketchPad.getFloor()[0][5]);
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardFacingNorthWithPenDown() {
+        assertTrue(ijapa.penIsUp());
+        ijapa.movePenDown();
+        ijapa.moveForward(5, sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5, sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5, sketchPad);
+        ijapa.turnRight();
+        ijapa.moveForward(5,  sketchPad);
+        assertEquals(0, ijapa.getCurrentPosition().getRow());
+        assertEquals(0, ijapa.getCurrentPosition().getColumn());
+
+        assertEquals(1, sketchPad.getFloor()[0][1]);
+        assertEquals(1, sketchPad.getFloor()[0][5]);
+    }
+
+    @Test
+    public void testThatTurtleCannotMoveMoreThan_20_stepsWhenFacingAnyDirection() {
+        assertTrue(ijapa.penIsUp());
+        ijapa.movePenDown();
+        assertThrows(IllegalArgumentException.class, () -> {ijapa.moveForward(50, sketchPad);});
     }
 }
