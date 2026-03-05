@@ -1,6 +1,4 @@
-package tictactoe;
-
-import java.sql.SQLOutput;
+package myPackage;
 
 public class TicTacToe {
     public static void main(String[] args) {
