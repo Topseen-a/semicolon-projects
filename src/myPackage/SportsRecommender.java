@@ -3,12 +3,12 @@ package myPackage;
 import java.util.Scanner;
 public class SportsRecommender{
     public static void main(String[] args){
-    
+
         Scanner input = new Scanner(System.in);
-    
+
         System.out.print("Enter the temperature in Celsius: ");
         double celsius = input.nextDouble();
-    
+
         System.out.println(sportsRecommender(celsius));
     }
 

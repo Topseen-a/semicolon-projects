@@ -28,7 +28,7 @@ public class CreditCardValidator{
         boolean isValid = isValidCard(cardNumber);
         if (isValid){
             System.out.println("Credit Card Status: Valid");
-        } 
+        }
         else {
             System.out.println("Credit Card Status: Invalid");
         }
@@ -40,7 +40,7 @@ public class CreditCardValidator{
         }
         else {
             return false;
-        }    
+        }
     }
 
     public static String getCardType(String cardNumber){
@@ -91,5 +91,5 @@ public class CreditCardValidator{
             sum += Character.getNumericValue(cardNumber.charAt(count));
         }
         return sum;
-    }    
+    }
 }

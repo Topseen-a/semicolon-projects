@@ -1,6 +1,5 @@
 package myPackage;
 
-import java.util.Arrays;
 public class ArrayMax{
     public static void main(String[] args){
 
