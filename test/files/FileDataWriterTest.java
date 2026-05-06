@@ -89,4 +89,10 @@ public class FileDataWriterTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testFileDataWriterJavaIO(){
+        String fileLocation = "/home/semi/Documents/semicolonProjects/src/files/output/note.txt";
+        FileDataWriter.writeDataToFile("This is the data written", fileLocation);
+    }
 }
